@@ -4,6 +4,20 @@ import (
 	"fmt"
 )
 
+type EpisodePart struct {
+	AirDate        string `json:"air_date"`
+	EpisodeNumber  int    `json:"episode_number"`
+	ID             int
+	Name           string
+	Overview       string
+	ProductionCode string `json:"production_code"`
+	SeasonNumber   int    `json:"season_number"`
+	StillPath      string `json:"still_path"`
+	VoteAverage    int    `json:"vote_average"`
+	VoteCount      int    `json:"vote_count"`
+	ShowId         int    `json:"show_id"`
+}
+
 // TV struct
 type TV struct {
 	BackdropPath string `json:"backdrop_path"`
@@ -20,25 +34,15 @@ type TV struct {
 		ID   int
 		Name string
 	}
-	NextEpisodeToAir struct {
-		AirDate        string `json:"air_date"`
-		EpisodeNumber  int    `json:"episode_number"`
-		ID             int
-		Name           string
-		Overview       string
-		ProductionCode string `json:"production_code"`
-		SeasonNumber   int    `json:"season_number"`
-		StillPath      string `json:"still_path"`
-		VoteAverage    int    `json:"vote_average"`
-		VoteCount      int    `json:"vote_count"`
-	} `json:"next_episode_to_air"`
-	Homepage     string
-	ID           int
-	InProduction bool `json:"in_production"`
-	Languages    []string
-	LastAirDate  string `json:"last_air_date"`
-	Name         string
-	Networks     []struct {
+	LastEpisodeToAir EpisodePart `json:"last_episode_to_air"`
+	NextEpisodeToAir EpisodePart `json:"next_episode_to_air"`
+	Homepage         string
+	ID               int
+	InProduction     bool `json:"in_production"`
+	Languages        []string
+	LastAirDate      string `json:"last_air_date"`
+	Name             string
+	Networks         []struct {
 		ID        int
 		Name      string
 		LogoPath  string `json:"logo_path"`
