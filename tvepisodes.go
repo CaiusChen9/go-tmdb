@@ -32,6 +32,7 @@ type TvEpisode struct {
 	StillPath      string  `json:"still_path"`
 	VoteAverage    float32 `json:"vote_average"`
 	VoteCount      uint32  `json:"vote_count"`
+	Runtime        uint32  `json:"runtime"`
 }
 
 // TvEpisodeImages struct
