@@ -3,6 +3,7 @@ package tmdb
 import (
 	"encoding/json"
 	"fmt"
+	httpProxy "golang.org/x/net/proxy"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -148,11 +149,24 @@ func getHTTPClient() http.Client {
 }
 
 func getHTTPClientWithProxy(proxy Proxy) http.Client {
-	return http.Client{
-		Transport: &http.Transport{
-			Proxy: http.ProxyURL(makeProxyURL(proxy)),
-		},
+	var auth *httpProxy.Auth
+	if proxy.Auth {
+		auth = &httpProxy.Auth{
+			User:     proxy.Login,
+			Password: proxy.Password,
+		}
 	}
+	dialer, err := httpProxy.SOCKS5("tcp", fmt.Sprintf("%s:%d", proxy.Login, proxy.Port), auth, httpProxy.Direct)
+	if err != nil {
+		panic(err)
+	}
+
+	return http.Client{Transport: &http.Transport{Dial: dialer.Dial}}
+	//return http.Client{
+	//	Transport: &http.Transport{
+	//		Proxy: http.ProxyURL(makeProxyURL(proxy)),
+	//	},
+	//}
 }
 
 func makeProxyURL(proxy Proxy) *url.URL {
