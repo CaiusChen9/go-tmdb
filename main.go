@@ -160,7 +160,6 @@ func getHTTPClientWithProxy(proxy Proxy) http.Client {
 	if err != nil {
 		panic(err)
 	}
-
 	return http.Client{Transport: &http.Transport{Dial: dialer.Dial}}
 	//return http.Client{
 	//	Transport: &http.Transport{
